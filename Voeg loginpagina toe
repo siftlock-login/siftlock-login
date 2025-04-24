@@ -1,0 +1,59 @@
+index.html
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siftlock Release Hulp - Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; color: #333; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+    h1 { color: #0073e6; text-align: center; }
+    p.info { font-size: 15px; background: #e6f0ff; padding: 15px; border-left: 4px solid #0073e6; margin-bottom: 30px; border-radius: 6px; }
+    label { display: block; margin: 15px 0 5px; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .btn { display: block; width: 100%; padding: 10px; background: #0073e6; color: white; border: none; border-radius: 6px; margin-top: 20px; cursor: pointer; }
+    .btn:hover { background: #005bb5; }
+    .error { color: red; text-align: center; margin-top: 15px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+
+    <p class="info">
+      Wil je toegang tot de Siftlock Release Hulpomgeving? <br>
+      Vraag dan eerst een gebruikersnaam en wachtwoord aan via e-mail:<br>
+      <strong><a href="mailto:rlgrijpink@gmail.com">rlgrijpink@gmail.com</a></strong><br>
+      Na goedkeuring ontvang je je inloggegevens.
+    </p>
+
+    <form onsubmit="return checkLogin()">
+      <label for="username">Gebruikersnaam</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Wachtwoord</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit" class="btn">Inloggen</button>
+      <p class="error" id="error">Onjuiste inloggegevens</p>
+    </form>
+  </div>
+
+  <script>
+    function checkLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Vaste login (voorbeeld)
+      if (username === "siftlock" && password === "release2025") {
+        window.location.href = "https://siftlock-release-hulp.webnode.nl/";
+        return false;
+      } else {
+        document.getElementById("error").style.display = "block";
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
