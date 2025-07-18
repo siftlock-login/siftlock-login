@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siftlock Hulp - Beveiligde Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0f7fa, #bbdefb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 420px;
+      width: 90%;
+      padding: 30px;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #0b3c91;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      display: none;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔐 Inloggen</h1>
+    <form id="loginForm">
+      <label for="username">Gebruikersnaam</label>
+      <input type="text" id="username" required>
+
+      <label for="password">Wachtwoord</label>
+      <input type="password" id="password" required>
+
+      <button type="submit" class="btn">Inloggen</button>
+      <div class="error" id="loginError">Onjuiste inloggegevens</div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h1>📨 Aanvraag doen</h1>
+    <form action="https://formspree.io/f/xnndqkgq" method="POST">
+      <label for="naam">Naam</label>
+      <input type="text" name="naam" id="naam" required>
+
+      <label for="email">E-mailadres</label>
+      <input type="email" name="_replyto" id="email" required>
+
+      <label for="bericht">Waarom wil je toegang?</label>
+      <textarea name="bericht" id="bericht" rows="4" required></textarea>
+
+      <button type="submit" class="btn">Verstuur aanvraag</button>
+    </form>
+  </div>
+
+  <script>
+    // Simpele hash (obfuscatie, geen echte beveiliging)
+    function hash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return hash;
+    }
+
+    const userHashes = {
+      "siftlock": hash("release2025"),
+      "erwin": hash("welkom2025"),
+      "sander": hash("geheim123"),
+      "johan": hash("welkom2025"),
+      "markwin": hash("stam2025"),
+      "arend": hash("welkom2025"),
+      "tobin": hash("geheim123"),
+      "marcel": hash("welkom2025"),
+      "emre": hash("geheim123"),
+      "paul": hash("welkom2025"),
+      "hendri.vi": hash("geheim123"),
+      "gast123": hash("welkom2025"),
+      "leo": hash("geheim123"),
+      "victor": hash("welkom2025"),
+      "gerard": hash("geheim123"),
+      "remco": hash("welkom2025"),
+      "jaco": hash("geheim123"),
+      "ramon": hash("welkom2025"),
+      "hennie": hash("geheim123"),
+      "coen": hash("welkom2025"),
+      "planninglogicx": hash("geheim123"),
+      "appie": hash("welkom2025"),
+      "koos": hash("geheim123"),
+      "jaap": hash("welkom2025"),
+      "alexander": hash("geheim123"),
+      "hendrim": hash("welkom2025"),
+      "rogier": hash("geheim123"),
+      "balte": hash("welkom2025"),
+      "ender": hash("geheim123"),
+      "riny": hash("welkom2025"),
+      "christine": hash("geheim123"),
+      "ferdinand": hash("welkom2025"),
+      "frank": hash("geheim123"),
+      "alex": hash("welkom2025"),
+      "pascal": hash("geheim123"),
+      "danielle": hash("welkom2025"),
+      "sjors": hash("geheim123"),
+      "kiley": hash("welkom2025"),
+      "salvator": hash("geheim123"),
+      "peter": hash("welkom2025"),
+      "tycho": hash("welkom2025"),
+      "theo": hash("geheim123"),
+      "henk": hash("welkom2025"),
+      "vuren1": hash("geheim123"),
+      "vuren2": hash("welkom2025"),
+      "vuren3": hash("geheim123"),
+      "vuren4": hash("welkom2025"),
+      "rotterdam1": hash("welkom2025"),
+      "rotterdam2": hash("welkom2025!"),
+      "rotterdam3": hash("welkom2025@"),
+      "rotterdam4": hash("welkom2025#"),
+      "rotterdam5": hash("welkom2025$"),
+      "rotterdam6": hash("welkom2025%"),
+      "rotterdam7": hash("welkom2025*")
+    };
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("loginError");
+
+      if (userHashes[username] && userHashes[username] === hash(password)) {
+        window.location.assign("https://siftlock-release-hulp.webnode.nl/");
+      } else {
+        error.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
